@@ -1,5 +1,6 @@
 class communication():
 
+    #instance attribute
     def __init__(self, letter, keyy ):
         self.message = letter
         self.key = keyy
