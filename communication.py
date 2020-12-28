@@ -1,73 +1,74 @@
 class communication():
-    def encrypt(self, letter, val):
-        result = ""
-        for i in letter[0:]:
-            key = "qonpacfrhsbivmtluzjewkygxd"
+
+    def __init__(self, letter, keyy ):
+        self.message = letter
+        self.key = keyy
+        self.kkey = "qonpacfrhsbivmtluzjewkygxd"
+        self.symbols = ["," , ".", " ", "?", "(", ")", "\"", "\'", ";", ":"]
+        self.result = ""
+
+
+
+    def encrypt(self):
+        for i in self.message[0:]:
             if i.isupper():
-                key = key.upper()
-                position = key.find(i)
-                value = position + val
+                key = self.kkey.upper()
+                position = self.kkey.find(i)
+                value = position + self.key
                 if value > 25:
                     value = (value - 26)
-                result += key[value]
+                self.result += self.kkey[value]
 
             elif i.islower():
-                position = key.find(i)
-                value = position + val
+                position = self.kkey.find(i)
+                value = position + self.key
                 if value > 25:
                     value = (value - 26)
-                result += key[value]
-            elif i in ["," , ".", " ", "?", "(", ")", "\"", "\'", ";", ":"]:
-                result += i
-        print(result)
+                self.result += self.kkey[value]
+            elif i in self.symbols:
+                self.result += i
+        print(self.result)
 
 
-    def decrypt(self, letter, val):
-        result = ""
-        for i in letter[0:]:
-            key = "qonpacfrhsbivmtluzjewkygxd"
+    def decrypt(self):
+        for i in self.message[0:]:
             if i.isupper():
-                key = key.upper()
-                position = key.find(i)
-                value = position - val
-                if position < val:
-                    if val % 2 != 0:
-                        if position == (val//2) + 1:
-                            value = 26 - (val - position)
+                key = self.kkey.upper()
+                position = self.kkey.find(i)
+                value = position - self.key
+                if position < self.key:
+                    if self.key % 2 != 0:
+                        if position == (self.key//2) + 1:
+                            value = 26 - (self.key - position)
                 else:
-                    value = position - val
-                result += key[value]
+                    value = position - self.key
+                self.result += self.kkey[value]
 
             elif i.islower():
-                position = key.find(i)
-                value = position - val
-                if position < val:
-                    if val % 2 != 0:
-                        if position == (val//2) :
-                            value = 26 - (val - position)
+                position = self.kkey.find(i)
+                value = position - self.key
+                if position < self.key:
+                    if self.key % 2 != 0:
+                        if position == (self.key//2) :
+                            value = 26 - (self.key - position)
                 else:
-                    value = position - val
-                result += key[value]
-            elif i in ["," , ".", " ", "?", "(", ")", "\"", "\'", ";", ":"]:
-                result += i
-        print(result)
+                    value = position - self.key
+                self.result += self.kkey[value]
+            elif i in self.symbols:
+                self.result += i
+        print(self.result)
 
 
 
-
-
-
-obj = communication()
+message = input("Copy and paste the file without any edit here :")
+key = int(input("Enter the key for decription :"))
+obj = communication(message, key)
 
 s = input("Do you want to read or write the file :")
 
-if s in ["Read", "read", "READ", "r", "R"]:
-    message = input("Copy and paste the file without any edit here :")
-    key = int(input("Enter the key for decription :"))
-    obj.decrypt(message, key)
-elif s in ["Write", "write", "w", "W", "WRITE"]:
-    message = input("Type here (dont use emoji's) :")
-    key = int(input("Enter the encryption key :"))
-    obj.encrypt(message, key)
+if s in ["read", "r"]:
+    obj.decrypt()
+elif s in ["write", "w"]:
+    obj.encrypt()
 else:
     print("Enter 'read/r' or 'write/w' for acces this code")
